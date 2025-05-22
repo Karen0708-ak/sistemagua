@@ -33,8 +33,9 @@
                 {% for e in casas%}
                     <option value="{{e.id}}">{{e.direccion}}</option>
                 {% endfor%}
-            </select><br>
-
+            </select>
+            <br>
+            <br>
             <button class="btn btn-success" type="submit">Guardar</button>
             <a class="btn btn-danger" href="{% url 'inicioin' %}">Cancelar</a><br><br>
         </form>
