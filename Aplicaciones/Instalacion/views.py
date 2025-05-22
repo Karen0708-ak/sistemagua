@@ -49,6 +49,7 @@ def editarInstalacion(request,id):
     return render(request,"editarInstalacion.html",{'instalacionEditar':instalacionEditar, 'empleados':rempleados,'casas':lcasa})
 
 def procesarEdicionInstalacion(request):
+    id=request.POST["id"]
     nombre = request.POST["nombre"]
     descripcion = request.POST["descripcion"]
     fecha_inicio = request.POST["fecha_inicio"]
