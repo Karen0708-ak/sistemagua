@@ -35,6 +35,7 @@ def editarEmpleado(request,id):
     return render(request,"editarEmpleado.html",{'empleadoEditar':empleadoEditar})
 
 def procesarEdicionEmpleado(request):
+    id=request.POST["id"]
     nombre = request.POST["nombre"]
     cedula = request.POST["cedula"]
     especialidad = request.POST["especialidad"]
