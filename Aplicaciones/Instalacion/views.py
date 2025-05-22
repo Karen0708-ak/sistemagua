@@ -7,57 +7,64 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 def inicio(request):
     listadoInstalacionCaptacion=InstalacionCaptacion.objects.all()
-    return render(request,"iniciin.html",{'instalacion':listadoInstalacionCaptacion})
+    return render(request,"inicioin.html",{'instalacion':listadoInstalacionCaptacion})
 
 def nuevoInstalacion(request):
     rempleados=Empleado.objects.all()
-    lvi=Vinedo.objects.all()
-    return render(request,"nuevoMuestreo.html",{'empleados':rempleados,'vinedos':lvinedos})
+    lcasa=Casa.objects.all()
+    return render(request,"nuevaInstalacion.html",{'empleados':rempleados,'casas':lcasa})
 #Almacenando los datos de cargo en la Bdd
-def guardarMuestreo(request):
-    fecha = request.POST["fecha"]
-    resultados = request.POST["resultados"]
-    analistaid = request.POST["analista"]
-    analista=Empleado.objects.get(id=analistaid)
-    vinedoid = request.POST["vinedo"]
-    vinedo=Vinedo.objects.get(id=vinedoid)
-    nuevoMuestreo=Muestreo.objects.create(
-            fecha=fecha,
-            resultados=resultados,
-            analista=analista,
-            vinedo=vinedo,
+def guardarInstalacion(request):
+    nombre = request.POST["nombre"]
+    descripcion = request.POST["descripcion"]
+    fecha_inicio = request.POST["fecha_inicio"]
+    fecha_fin = request.POST["fecha_fin"]
+    empleadoid = request.POST["empleado"]
+    empleado = Empleado.objects.get(id=empleadoid)
+    casaid = request.POST["casa"]
+    casa = Casa.objects.get(id=casaid)
+    nuevoInstalacion=InstalacionCaptacion.objects.create(
+            nombre=nombre,
+            descripcion=descripcion,
+            fecha_inicio=fecha_inicio,
+            fecha_fin=fecha_fin,
+            empleado=empleado,
+            casa=casa,
         )
     #mensaje de confirmacion
-    messages.success(request,"Muestreo guardado exitosamente")
-    return redirect('iniciomu')
+    messages.success(request,"Instalacion guardada exitosamente")
+    return redirect('inicioin')
 
-def eliminarMuestreo(request,id):
-    muestreoEliminar = Muestreo.objects.get(id=id)
-    muestreoEliminar.delete()
-    messages.success(request,"Muestreo ELIMINADO exitosamente")
-    return redirect('iniciomu')
+def eliminarInstalacion(request,id):
+    instalacionEliminar = InstalacionCaptacion.objects.get(id=id)
+    instalacionEliminar.delete()
+    messages.success(request,"Instalacion ELIMINADA exitosamente")
+    return redirect('inicioin')
 
 #editar
-def editarMuestreo(request,id):
-    muestreoEditar=Muestreo.objects.get(id=id)
+def editarInstalacion(request,id):
+    instalacionEditar=InstalacionCaptacion.objects.get(id=id)
     rempleados=Empleado.objects.all()
-    lvinedos=Vinedo.objects.all()
-    return render(request,"editarMuestreo.html",{'muestreoEditar':muestreoEditar, 'empleados':rempleados,'vinedos':lvinedos})
+    lcasa=Casa.objects.all()
+    return render(request,"editarInstalacion.html",{'instalacionEditar':instalacionEditar, 'empleados':rempleados,'casas':lcasa})
 
-def procesarEdicionMuestreo(request):
-    id=request.POST["id"]
-    fecha = request.POST["fecha"]
-    resultados = request.POST["resultados"]
-    analistaid = request.POST["analista"]
-    analista=Empleado.objects.get(id=analistaid)
-    vinedoid = request.POST["vinedo"]
-    vinedo=Vinedo.objects.get(id=vinedoid)
-    muestreo=Muestreo.objects.get(id=id)
-    muestreo.fecha=fecha
-    muestreo.resultados=resultados
-    muestreo.analista= analista
-    muestreo.vinedo= vinedo
-    muestreo.save()
+def procesarEdicionInstalacion(request):
+    nombre = request.POST["nombre"]
+    descripcion = request.POST["descripcion"]
+    fecha_inicio = request.POST["fecha_inicio"]
+    fecha_fin = request.POST["fecha_fin"]
+    empleadoid = request.POST["empleado"]
+    empleado = Empleado.objects.get(id=empleadoid)
+    casaid = request.POST["casa"]
+    casa = Casa.objects.get(id=casaid)
+    instalacion=InstalacionCaptacion.objects.get(id=id)
+    instalacion.nombre=nombre
+    instalacion.descripcion=descripcion
+    instalacion.fecha_inicio= fecha_inicio
+    instalacion.fecha_fin= fecha_fin
+    instalacion.empleado= empleado
+    instalacion.casa= casa
+    instalacion.save()
     #mensaje de confirmacion
-    messages.success(request,"Muestreo ACTUALIZADO exitosamente")
-    return redirect('iniciomu')
+    messages.success(request,"Instalacion ACTUALIZADa exitosamente")
+    return redirect('inicioin')
