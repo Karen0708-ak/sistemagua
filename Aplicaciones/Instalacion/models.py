@@ -9,7 +9,5 @@ class InstalacionCaptacion(models.Model):
     descripcion = models.TextField()
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
-    
-    # Relaciones
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     casa = models.ForeignKey(Casa, on_delete=models.CASCADE)

@@ -25,5 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('Aplicaciones.Casa.urls')),
     path('',include('Aplicaciones.Empleado.urls')),
-    path('',include('Aplicaciones.Instalacion.urls')),
+    #path('',include('Aplicaciones.Instalacion.urls')),
 ]
