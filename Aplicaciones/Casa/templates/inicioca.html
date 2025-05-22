@@ -1,0 +1,62 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block body %}
+<br>
+<h1 class="text-center">Listado de Casa</h1>
+
+<hr>
+<table class="table table-bordered table-striped table-hover ">
+    <thead>
+        <tr class="table-success text-center">
+            <th>ID</th>
+            <th>DIRECCION</th>
+            <th>PROPIETARIO</th>
+            <th>TELEFONO</th>
+            <th>ACCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for casaTemporal in casa %}
+            <tr>
+                <td>{{casaTemporal.id}}</td>
+                <td>{{casaTemporal.direccion}}</td>
+                <td>{{casaTemporal.propietario}}</td>
+                <td>{{casaTemporal.telefono}}</td>
+                <td>
+                    <a href="editarCasa/{{casaTemporal.id}}" class="btn btn-outline-warning">
+                        <i class="fa fa-pen"></i>
+                    </a>
+                    <a href="#" class="btn btn-outline-danger" onclick="confirmarEliminacion('{{casaTemporal.id}}')">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    <script>
+                        function confirmarEliminacion(id) {
+                            Swal.fire({
+                            title: '¿Estás seguro?',
+                            text: '¡Esta acción no se puede deshacer!',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Sí, eliminar',
+                            cancelButtonText: 'Cancelar'
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = `eliminarCasa/${id}`;
+                            }
+                            });
+                        }
+                        </script>  
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="text-center ">
+    <a href="nuevaCasa" class="btn btn-primary " >
+        Agregar Casa
+    </a>
+</div>
+<br>
+<br>
+{% endblock %}
