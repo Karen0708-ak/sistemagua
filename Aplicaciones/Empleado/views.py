@@ -1,3 +1,50 @@
-from django.shortcuts import render
+#importando el modelo cargo
+from .models import Empleado
+from django.shortcuts import render, redirect
+from django.contrib import messages
+def inicio(request):
+    listadoEmpleado=Empleado.objects.all()
+    return render(request,"inicioem.html",{'empleado':listadoEmpleado})
 
-# Create your views here.
+def nuevoEmpleado(request):
+    return render(request,"nuevoEmpleado.html")
+#Almacenando los datos de cargo en la Bdd
+def guardarEmpleado(request):
+    nombre = request.POST["nombre"]
+    cedula = request.POST["cedula"]
+    especialidad = request.POST["especialidad"]
+    telefono = request.POST["telefono"]
+    nuevoEmpleado=Empleado.objects.create(
+            nombre=nombre,
+            cedula=cedula,
+            especialidad=especialidad,
+            telefono=telefono,
+        )
+    #mensaje de confirmacion
+    messages.success(request,"Empleado guardado exitosamente")
+    return redirect('inicioem')
+def eliminarEmpleado(request,id):
+    empleadoEliminar = Empleado.objects.get(id=id)
+    empleadoEliminar.delete()
+    messages.success(request,"Empleado ELIMINADO exitosamente")
+    return redirect('inicioem')
+
+#editar
+def editarEmpleado(request,id):
+    empleadoEditar=Empleado.objects.get(id=id)
+    return render(request,"editarEmpleado.html",{'empleadoEditar':empleadoEditar})
+
+def procesarEdicionEmpleado(request):
+    nombre = request.POST["nombre"]
+    cedula = request.POST["cedula"]
+    especialidad = request.POST["especialidad"]
+    telefono = request.POST["telefono"]
+    empleado=Empleado.objects.get(id=id)
+    empleado.nombre=nombre
+    empleado.cedula=cedula
+    empleado.especialidad=especialidad
+    empleado.telefono=telefono
+    empleado.save()
+    #mensaje de confirmacion
+    messages.success(request,"Empleado ACTUALIZADO exitosamente")
+    return redirect('inicioem')
