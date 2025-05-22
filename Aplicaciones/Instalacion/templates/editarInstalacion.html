@@ -1,0 +1,46 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block body %}
+<div class="row" >
+    <div class="col-md-3" ></div>
+    <div class="col-md-6 bg-black" >
+        <h1 >Nueva Instalacion</h1>
+        <form action="/procesarEdicionInstalacion" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{instalacionEditar.id}}">
+            <label for="nombre" >Nombre</label><br>
+            <input class="form-control " type="text" name="nombre" id="nombre" value="{{instalacionEditar.nombre}}"><br>
+
+            <label for="descripcion">descripcion</label><br>
+            <input class="form-control " type="text" name="descripcion" id="descripcion" value="{{instalacionEditar.descripcion}}"><br>
+
+            <label for="fecha_inicio">Fecha de inicio </label><br>
+            <input class="form-control" type="date" name="fecha_inicio" id="fecha_inicio" value="{{instalacionEditar.fecha_inicio|date:'Y-m-d' }}"><br>
+
+            <label for="fecha_fin">Fecha de finalizacion </label><br>
+            <input class="form-control" type="date" name="fecha_fin" id="fecha_fin" value="{{instalacionEditar.fecha_fin|date:'Y-m-d' }}"><br>
+
+            <label for="empleado" >Empleado</label><br>
+            <select name="empleado" id="empleado">
+                <option value="">Seleccione un Empleado</option>
+                {% for e in empleados%}
+                    <option value="{{e.id}}" {% if e.id == instalacionEditar.empleado.id %}selected{% endif%}>
+                        {{e.nombre}}</option>
+                {% endfor%}
+            </select><br>
+            <label for="casa">Casa</label><br>
+            <select name="casa" id="casa">
+                <option value="">Seleccione un Casa</option>
+                {% for e in casas%}
+                    <option value="{{e.id}}"{% if e.id == instalacionEditar.casa.id %}selected{% endif%}>
+                        {{e.direccion}}</option>
+                {% endfor%}
+            </select><br>
+
+            <button class="btn btn-success" type="submit">Guardar</button>
+            <a class="btn btn-danger" href="{% url 'inicioin' %}">Cancelar</a><br><br>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+{% endblock %}

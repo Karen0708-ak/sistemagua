@@ -9,7 +9,7 @@ def inicio(request):
     listadoInstalacionCaptacion=InstalacionCaptacion.objects.all()
     return render(request,"inicioin.html",{'instalacion':listadoInstalacionCaptacion})
 
-def nuevoInstalacion(request):
+def nuevaInstalacion(request):
     rempleados=Empleado.objects.all()
     lcasa=Casa.objects.all()
     return render(request,"nuevaInstalacion.html",{'empleados':rempleados,'casas':lcasa})
@@ -23,7 +23,7 @@ def guardarInstalacion(request):
     empleado = Empleado.objects.get(id=empleadoid)
     casaid = request.POST["casa"]
     casa = Casa.objects.get(id=casaid)
-    nuevoInstalacion=InstalacionCaptacion.objects.create(
+    nuevaInstalacion=InstalacionCaptacion.objects.create(
             nombre=nombre,
             descripcion=descripcion,
             fecha_inicio=fecha_inicio,
